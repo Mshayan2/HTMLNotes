@@ -44,7 +44,6 @@ body {
     background-color: var(--bg-color);
     color: var(--text-main);
     font-family: var(--font-sans);
-    overflow: hidden;
     height: 100vh;
     width: 100vw;
     display: flex;
@@ -1172,3 +1171,157 @@ body::after {
     font-size: 0.75rem;
     color: var(--text-muted);
 }
+
+/* =========================================================================
+   Responsive Design & Mobile Overrides
+   ========================================================================= */
+
+@media (max-width: 768px) {
+    /* 1. Sidebar overlay on mobile */
+    .sidebar {
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        height: 100%;
+        z-index: 1000;
+        background: rgba(8, 11, 17, 0.95);
+        box-shadow: 5px 0 25px rgba(0, 0, 0, 0.6);
+        transition: transform var(--transition-speed) cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    
+    .sidebar.collapsed {
+        margin-left: 0;
+        transform: translateX(-100%);
+    }
+    
+    .sidebar:not(.collapsed) {
+        transform: translateX(0);
+    }
+
+    /* Blur and dim backdrop when sidebar is open */
+    .app-container:has(.sidebar:not(.collapsed)) .presentation-container {
+        filter: brightness(0.4) blur(2px);
+        pointer-events: none;
+    }
+
+    /* 2. Layout adjustments */
+    .presentation-header {
+        padding: 0 16px;
+    }
+
+    .shortcut-tips {
+        display: none; /* keyboard tips irrelevant on touch screens */
+    }
+
+    .slides-viewport {
+        padding: 20px 16px;
+    }
+
+    /* 3. Typography scaling */
+    .main-title {
+        font-size: 2.2rem;
+    }
+    
+    .slide-title {
+        font-size: 1.8rem;
+    }
+    
+    .main-subtitle {
+        font-size: 1rem;
+    }
+
+    /* 4. Widget layouts stacking */
+    .explorer-container,
+    .link-dialer-container,
+    .grid-planner,
+    .playground-grid {
+        grid-template-columns: 1fr;
+        min-height: auto;
+    }
+
+    .playground-grid {
+        height: auto;
+    }
+
+    .playground-textarea, .playground-iframe {
+        height: 220px;
+    }
+
+    .terminal-console {
+        grid-column: span 1;
+        height: 140px;
+    }
+
+    /* 5. Footer and Navigation Controls */
+    .presentation-footer {
+        padding: 0 16px;
+        position: relative;
+    }
+
+    .progress-container {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        margin: 0;
+        max-width: 100%;
+        width: 100%;
+        border-radius: 0;
+        height: 4px;
+    }
+}
+
+@media (max-width: 480px) {
+    /* Further spacing & sizing optimizations for small phones */
+    .slides-viewport {
+        padding: 12px;
+    }
+
+    .main-title {
+        font-size: 1.8rem;
+    }
+    
+    .slide-title {
+        font-size: 1.5rem;
+    }
+
+    .nav-control-btn {
+        padding: 8px 16px;
+        font-size: 0.85rem;
+        gap: 6px;
+    }
+
+    .slide-indicator {
+        font-size: 0.8rem;
+        min-width: auto;
+    }
+
+    .card-panel {
+        padding: 16px;
+        gap: 12px;
+    }
+
+    .timeline-rail {
+        padding: 0 20px;
+    }
+
+    .timeline-year {
+        font-size: 0.75rem;
+        top: -26px;
+    }
+
+    .entities-grid {
+        grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+        gap: 8px;
+    }
+
+    .entity-card {
+        padding: 8px;
+    }
+
+    .entity-sym {
+        font-size: 1.25rem;
+    }
+}
+

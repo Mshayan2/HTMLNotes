@@ -22,6 +22,11 @@ document.addEventListener('DOMContentLoaded', () => {
         showSlide(0);
         setupEventListeners();
         initWidgets();
+        
+        // Collapse sidebar on mobile viewports on load
+        if (window.innerWidth <= 768) {
+            sidebar.classList.add('collapsed');
+        }
     }
 
     function buildSidebarMenu() {
@@ -38,6 +43,10 @@ document.addEventListener('DOMContentLoaded', () => {
             `;
             navItem.addEventListener('click', () => {
                 showSlide(index);
+                // Auto-collapse sidebar on mobile after selecting a slide
+                if (window.innerWidth <= 768) {
+                    sidebar.classList.add('collapsed');
+                }
             });
             sidebarNav.appendChild(navItem);
         });
@@ -88,6 +97,18 @@ document.addEventListener('DOMContentLoaded', () => {
         
         // Sidebar Toggle
         toggleSidebarBtn.addEventListener('click', toggleSidebar);
+
+        // Close sidebar on mobile when clicking anywhere in the main container
+        const presentationContainer = document.querySelector('.presentation-container');
+        if (presentationContainer) {
+            presentationContainer.addEventListener('click', (e) => {
+                if (window.innerWidth <= 768 && !sidebar.classList.contains('collapsed')) {
+                    if (!e.target.closest('#toggle-sidebar')) {
+                        sidebar.classList.add('collapsed');
+                    }
+                }
+            });
+        }
 
         // Keyboard navigation
         document.addEventListener('keydown', (e) => {
